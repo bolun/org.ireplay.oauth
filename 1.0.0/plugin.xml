@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="org.apache.cordova.oauth"
+        version="1.0.0">
+    <name>Oauth</name>
+    <description>Cordova Oauth Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,oauth,facebook,twitter,qq</keywords>
+
+    <engines>
+        <engine name="cordova" version=">=3.5.0" />
+        <engine name="cordova-android" version=">=3.6.0-dev" />
+    </engines>
+
+    <js-module src="www/oauth.js" name="oauth">
+        <merges target="oauth" />
+    </js-module>
+
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Oauth" >
+                <param name="android-package" value="org.apache.cordova.oauth.Oauth"/>
+            </feature>
+            <access origin="https://openmobile.qq.com/*"/>
+            <access origin="http://qzs.qq.com/open/mobile/login/*"/>
+            <access origin="http://qzonestyle.gtimg.cn/*"/>
+            <access origin="http://pub.idqqimg.com/*"/>
+            <access origin="http://appsupport.qq.com/*"/>
+            <access origin="http://support.qq.com/*"/>
+            <access origin="http://qzs.qq.com/*"/>
+            <access origin="http://m.qzone.com/*"/>
+            <preference name="oauth-qq-appid" value="100229743" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity
+                    android:name="com.tencent.tauth.AuthActivity"
+                    android:noHistory="true"
+                    android:launchMode="singleTask" >
+                <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent100229743"/>
+                </intent-filter>
+            </activity>
+            <activity
+                    android:name=" "
+                    android:configChanges="orientation|keyboardHidden"
+                    android:screenOrientation="portrait"
+                    android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+            </activity>
+        </config-file>
+
+        <source-file src="src/android/Oauth.java" target-dir="src/org/apache/cordova/oauth" />
+        <source-file src="src/android/OauthException.java" target-dir="src/org/apache/cordova/oauth" />
+        <source-file src="src/android/OauthStrategy/" target-dir="src/org/apache/cordova/oauth/oauthStrategy" />
+        <source-file src="src/android/open_sdk_r5043_lite.jar" target-dir="libs" />
+        <source-file src="src/android/mta-sdk-1.6.2.jar" target-dir="libs" />
+        <source-file src="src/android/android-support-v4.jar" target-dir="libs" />
+    </platform>
+</plugin>
